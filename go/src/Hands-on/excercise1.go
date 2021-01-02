@@ -2,19 +2,10 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 )
 
 func main() {
-	os := runtime.GOOS
-	switch os {
-	case "windows":
-		fmt.Println("Windows")
-	case "darwin":
-		fmt.Println("MAC operating system")
-	case "linux":
-		fmt.Println("Linux")
-	default:
-		fmt.Printf("%s.\n", os)
+	for i := 1; i <= 10000; i++ {
+		fmt.Println(i)
 	}
 }
