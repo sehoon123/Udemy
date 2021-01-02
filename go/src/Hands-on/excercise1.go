@@ -3,7 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	for i := 0; i <= 100; i++ {
-		fmt.Println(i % 4)
+	x := "James Bond"
+	if x == "James Bond" {
+		fmt.Println("Yes that's me")
+	} else {
+		fmt.Println("NO")
 	}
 }
