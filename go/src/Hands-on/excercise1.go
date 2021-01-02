@@ -5,7 +5,9 @@ import (
 )
 
 func main() {
-	for i := 1; i <= 10000; i++ {
-		fmt.Println(i)
+	for i := 65; i <= 90; i++ {
+		for j := 1; j <= 3; j++ {
+			fmt.Printf("%v\t%#U\n", i, i)
+		}
 	}
 }
