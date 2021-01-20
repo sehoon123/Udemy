@@ -6,7 +6,7 @@ const (
 	a = iota
 	b
 	c
-)
+
 	d = iota
 	e
 	f
@@ -17,6 +17,7 @@ func main() {
 	fmt.Println(b)
 	fmt.Println(c)
 	fmt.Printf("%T\n", a)
+	fmt.Println(b)
 	fmt.Printf("%T\n", b)
 	fmt.Printf("%T\n", c)
 	fmt.Println(d)

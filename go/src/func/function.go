@@ -3,44 +3,20 @@ package main
 import "fmt"
 
 func main() {
-	ii := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
-	a1 := sum(ii...)
-	fmt.Println(a1)
-
-	s2 := even(sum, ii...)
-	fmt.Println(s2)
-
-	s3 := odd(sum, ii...)
-	fmt.Println(s3)
+	a := incrementor()
+	b := incrementor()
+	fmt.Println(a())
+	fmt.Println(a())
+	fmt.Println(a())
+	fmt.Println(a())
+	fmt.Println(b())
+	fmt.Println(b())
 }
 
-func sum(xi ...int) int {
-	total := 0
-	for _, v := range xi {
-		total += v
+func incrementor() func() int {
+	var x int
+	return func() int {
+		x++
+		return x
 	}
-
-	return total
-}
-
-func even(f func(xi ...int) int, vi ...int) int {
-	var yi []int
-	for _, v := range vi {
-		if v%2 == 0 {
-			yi = append(yi, v)
-		}
-	}
-
-	return f(yi...)
-}
-
-func odd(f func(xi ...int) int, vi ...int) int {
-	var yi []int
-	for _, v := range vi {
-		if v%2 == 1 {
-			yi = append(yi, v)
-		}
-	}
-
-	return f(yi...)
 }

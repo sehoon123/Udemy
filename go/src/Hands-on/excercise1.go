@@ -2,68 +2,35 @@ package main
 
 import (
 	"fmt"
-	"sort"
+	"runtime"
+	"sync"
 )
 
-type user struct {
-	First   string
-	Last    string
-	Age     int
-	Sayings []string
-}
-
-type ByAge []user
-
-func (a ByAge) Len() int           { return len(a) }
-func (a ByAge) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-func (a ByAge) Less(i, j int) bool { return a[i].Age < a[j].Age }
-
-type ByName []user
-
-func (a ByName) Len() int           { return len(a) }
-func (a ByName) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-func (a ByName) Less(i, j int) bool { return a[i].First < a[j].First }
-
 func main() {
-	u1 := user{
-		First: "James",
-		Last:  "Bond",
-		Age:   32,
-		Sayings: []string{
-			"Shaken, not stirred",
-			"Youth is no guarantee of innovation",
-			"In his majesty's royal service",
-		},
-	}
 
-	u2 := user{
-		First: "Miss",
-		Last:  "Moneypenny",
-		Age:   27,
-		Sayings: []string{
-			"James, it is soo good to see you",
-			"Would you like me to take care of that for you, James?",
-			"I would really prefer to be a secret agent myself.",
-		},
-	}
+	fmt.Println("CPUs :", runtime.NumCPU())
+	fmt.Println("Goroutines :", runtime.NumGoroutine())
 
-	u3 := user{
-		First: "M",
-		Last:  "Hmmmm",
-		Age:   54,
-		Sayings: []string{
-			"Oh, James. You didn't.",
-			"Dear God, what has James done now?",
-			"Can someone please tell me where James Bond is?",
-		},
-	}
+	var wg sync.WaitGroup
+	wg.Add(2)
 
-	users := []user{u1, u2, u3}
+	go func() {
+		fmt.Println("hello from one")
+		wg.Done()
+	}()
 
-	fmt.Println(users)
-	sort.Sort(ByAge(users))
-	fmt.Println(users)
-	sort.Sort(ByName(users))
-	fmt.Println(users)
+	go func() {
+		fmt.Println("hello from two")
+		wg.Done()
+	}()
 
+	fmt.Println("CPUs :", runtime.NumCPU())
+	fmt.Println("Goroutines :", runtime.NumGoroutine())
+
+	wg.Wait()
+
+	fmt.Println("CPUs :", runtime.NumCPU())
+	fmt.Println("Goroutines :", runtime.NumGoroutine())
+
+	fmt.Println("about to exit")
 }
