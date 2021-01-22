@@ -1,22 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func main() {
-	a := incrementor()
-	b := incrementor()
-	fmt.Println(a())
-	fmt.Println(a())
-	fmt.Println(a())
-	fmt.Println(a())
-	fmt.Println(b())
-	fmt.Println(b())
-}
-
-func incrementor() func() int {
-	var x int
-	return func() int {
-		x++
-		return x
+	var x float64
+	fmt.Scanf("%f", &x)
+	a := (((math.Sqrt(((4 * x) - 1) / 3)) - 1) / 2) + 1
+	if math.Mod(a, 1) == 0 {
+		fmt.Println(int(a))
+	} else {
+		fmt.Println(int(a) + 1)
 	}
+
 }
