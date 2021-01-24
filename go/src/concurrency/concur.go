@@ -2,32 +2,22 @@ package main
 
 import (
 	"fmt"
-	"runtime"
-	"sync"
-	"sync/atomic"
+	"time"
 )
 
 func main() {
-	fmt.Println("CPUs: ", runtime.NumCPU())
-	fmt.Println("Goroutines: ", runtime.NumGoroutine())
+	fmt.Println("synchronization")
 
-	var counter int64
+	done := make(chan bool, 1)
+	go worker(done)
 
-	const gs = 100
-	var wg sync.WaitGroup
-	wg.Add(gs)
+	<-done
+}
 
-	for i := 0; i < gs; i++ {
-		go func() {
-			atomic.AddInt64(&counter, 1)
-			runtime.Gosched()
-			fmt.Println("Counter\t", atomic.LoadInt64(&counter))
-			wg.Done()
-		}()
-		fmt.Println("Goroutines: ", runtime.NumGoroutine())
-	}
-	wg.Wait()
+func worker(done chan bool) {
+	fmt.Println("working ...")
+	time.Sleep(time.Second)
+	fmt.Println("done")
 
-	fmt.Println("Goroutines: ", runtime.NumGoroutine())
-	fmt.Println("count:", counter)
+	done <- true
 }
