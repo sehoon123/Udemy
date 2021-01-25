@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 )
 
 func main() {
-	fmt.Println(runtime.GOOS, runtime.GOARCH)
+	c := make(chan int, 1)
+	c <- 42
+	fmt.Println(<-c)
 }
