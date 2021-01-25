@@ -5,13 +5,29 @@ import (
 )
 
 func main() {
-	cs := make(chan int)
+	c := gen()
+	receive(c)
+
+	fmt.Println("about to exit")
+}
+
+func gen() <-chan int {
+	c := make(chan int)
 
 	go func() {
-		cs <- 42
-	}()
-	fmt.Println(<-cs)
 
-	fmt.Printf("------\n")
-	fmt.Printf("cs\t%T\n", cs)
+		for i := 0; i < 100; i++ {
+			c <- i
+		}
+		close(c)
+	}()
+
+	return c
+}
+
+func receive(c <-chan int) {
+	for v := range c {
+		fmt.Println(v)
+	}
+
 }
