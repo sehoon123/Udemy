@@ -1,21 +1,22 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
 	c := make(chan int)
+	add(c)
+	for v := range c {
+		fmt.Println(v)
 
+	}
+
+}
+
+func add(c chan int) {
 	go func() {
-		c <- 42
+		for i := 0; i < 100; i++ {
+			c <- i
+		}
+		close(c)
 	}()
-
-	v, ok := <-c
-	fmt.Println(v, ok)
-
-	close(c)
-
-	v, ok = <-c
-	fmt.Println(v, ok)
 }
