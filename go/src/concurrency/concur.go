@@ -1,23 +1,23 @@
 package main
 
-import (
-	"fmt"
-	"time"
-)
+import "fmt"
 
 func main() {
-	fmt.Println("synchronization")
+	fmt.Println("Channel direction")
 
-	done := make(chan bool, 1)
-	go worker(done)
+	pings := make(chan string, 1)
+	pongs := make(chan string, 1)
 
-	<-done
+	ping(pings, "passed message")
+	pong(pings, pongs)
+
+	fmt.Println(<-pongs)
 }
 
-func worker(done chan bool) {
-	fmt.Println("working ...")
-	time.Sleep(time.Second)
-	fmt.Println("done")
+func ping(pings chan<- string, msg string) {
+	pings <- msg
+}
 
-	done <- true
+func pong(pings <-chan string, pongs chan<- string) {
+	pongs <- <-pings
 }
