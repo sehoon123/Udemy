@@ -1,29 +1,27 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"sync"
 )
 
+type person struct {
+	First   string
+	Last    string
+	Sayings []string
+}
+
 func main() {
-	var wg sync.WaitGroup
-	c := make(chan int)
-
-	go func() {
-		for i := 0; i < 10; i++ {
-			wg.Add(1)
-			go func(m int) {
-				for i := 0; i < 10; i++ {
-					c <- i*10 + m
-				}
-				wg.Done()
-			}(i)
-		}
-		wg.Wait()
-		close(c)
-	}()
-
-	for v := range c {
-		fmt.Println(v)
+	p1 := person{
+		First:   "James",
+		Last:    "Bond",
+		Sayings: []string{"Shaken, not stirred", "Any last wishes?", "Never say never"},
 	}
+
+	bs, err := json.Marshal(p1)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(bs))
+
 }
