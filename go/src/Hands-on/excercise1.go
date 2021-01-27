@@ -18,10 +18,15 @@ func main() {
 		Sayings: []string{"Shaken, not stirred", "Any last wishes?", "Never say never"},
 	}
 
-	bs, err := json.Marshal(p1)
-	if err != nil {
-		fmt.Println(err)
-	}
+	bs, err := toJSON(p1)
+	fmt.Errorf("%T\n", err)
+
 	fmt.Println(string(bs))
 
+}
+
+// toJSON needs to return an error also
+func toJSON(a interface{}) ([]byte, error) {
+	bs, err := json.Marshal(a)
+	return bs, err
 }
