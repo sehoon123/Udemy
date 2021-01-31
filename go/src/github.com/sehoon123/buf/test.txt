@@ -1,0 +1,7 @@
+NOTE: The accepted answer was correct in early versions of Go. See the highest voted answer contains the more recent idiomatic way to achieve this.
+
+There is function ReadLine in package bufio.
+
+Please note that if the line does not fit into the read buffer, the function will return an incomplete line. If you want to always read a whole line in your program by a single call to a function, you will need to encapsulate the ReadLine function into your own function which calls ReadLine in a for-loop.
+
+bufio.ReadString('\n') isn't fully equivalent to ReadLine because ReadString is unable to handle the case when the last line of a file does not end with the newline character.
