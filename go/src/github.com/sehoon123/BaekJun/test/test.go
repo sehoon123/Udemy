@@ -7,18 +7,10 @@ import (
 )
 
 func main() {
-	var n, x int
-	reader := bufio.NewReader(os.Stdin)
-	writer := bufio.NewWriter(os.Stdout)
-	fmt.Fscanln(reader, &n, &x)
-	defer writer.Flush()
+	s := bufio.NewScanner(os.Stdin)
+	s.Scan()
 
-	var sequence = make([]int, n)
-	for i := range sequence {
-		fmt.Fscanf(reader, "%d ", &sequence[i])
-		if sequence[i] < x {
-			fmt.Fprintf(writer, "%d ", sequence[i])
-		}
+	for _, c := range s.Bytes() {
+		fmt.Println(c - '0')
 	}
-	fmt.Fprint(writer, "\n")
 }
